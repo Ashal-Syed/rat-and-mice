@@ -36,7 +36,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="relative w-full py-12 md:py-24 lg:py-32 xl:py-48 overflow-hidden"
+      className="relative w-full py-24 lg:py-32 xl:py-48 overflow-hidden"
     >
       <AnimatedBackground
         variant="gradient"

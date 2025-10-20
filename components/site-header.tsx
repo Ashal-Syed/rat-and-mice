@@ -93,13 +93,13 @@ export function SiteHeader() {
           </div>
 
           {/* Mobile Menu Button - Only visible on mobile */}
-          <button
+          {/* <button
             className="md:hidden flex items-center justify-center p-2 rounded-md bg-background/90 border border-border/40 shadow-sm"
             onClick={toggleMobileMenu}
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? <X className="text-foreground h-5 w-5" /> : <List className="text-foreground h-5 w-5" />}
-          </button>
+          </button> */}
         </div>
       </div>
 
