@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --red-gradient: linear-gradient(to bottom right, #a12727, #530808);
+  --dark-gradient: linear-gradient(to bottom right, #909090, #383838);
 }
 
 @theme inline {
@@ -12,15 +14,177 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@layer utilities {
+  .red-gradient {
+    background-image: var(--red-gradient);
+  }
+
+  .dark-gradient {
+    background-image: var(--dark-gradient);
+  }
+
+  .red-gradient-text {
+    background-image: var(--red-gradient);
+    @apply bg-clip-text text-transparent;
+  }
+
+  .description-text {
+    @apply text-gray-600 mt-2 text-sm;
+  }
+
+  .about-cards {
+    @apply rounded-3xl bg-gradient-to-br from-[#DDDDDD] to-white backdrop-blur-lg border border-white/20 shadow-lg transition-all duration-500 ease-out;
+    transform: translateY(0) scale(1);
+  }
+
+  .about-cards:hover {
+    @apply shadow-xl;
+    box-shadow: 0 0 20px rgba(162, 41, 38, 0.4);
+    transform: scale(1.02);
+  }
+
+  .about-cards:hover h1 {
+    @apply text-[#a22926];
+  }
+
+  .services-cards {
+    @apply relative h-80 w-80 rounded-xl overflow-hidden shadow-lg transition-all duration-500 ease-out;
+    transform: translateY(0) scale(1);
+  }
+
+  .services-cards::before {
+    content: "";
+    @apply absolute inset-0 bg-black/30 transition-opacity duration-500;
+    opacity: 0;
+    z-index: 1;
+  }
+
+  .services-cards:hover::before {
+    opacity: 1;
+  }
+
+  .services-cards:hover {
+    transform: translateY(-6px) scale(1.03);
+    @apply shadow-2xl;
+  }
+
+  .services-cards h1 {
+    @apply text-white font-bold text-2xl px-5 z-10 transition-colors duration-500;
+  }
+
+  /* .services-cards:hover h1 {
+    @apply text-[#a22926];
+  } */
+
+  .glass-effect {
+    @apply relative bg-white/10 backdrop-blur-xl shadow-lg overflow-hidden rounded-2xl;
+  }
+
+  .glass-effect::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.4),
+      rgba(255, 255, 255, 0.05)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  @property --angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+
+  .glass-effect::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: conic-gradient(
+      from var(--angle),
+      transparent 0 70%,
+      rgba(162, 41, 38, 0.9) 72% 82%,
+      transparent 84% 100%
+    );
+
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    animation: border-spin 5s linear infinite;
+    pointer-events: none;
+  }
+
+  .navbar-tab {
+    @apply relative font-medium text-black/70 transition-all duration-200;
+  }
+
+  .navbar-tab::after {
+    content: "";
+    @apply absolute left-0 bottom-0 w-0 h-[2px] bg-red-700 transition-all duration-300;
+  }
+
+  .navbar-tab:hover {
+    @apply font-bold text-red-700;
+  }
+
+  .navbar-tab:hover::after {
+    @apply w-full;
+  }
+
+  .navbar-tab.active {
+    @apply text-[#a22926] font-bold;
+  }
+
+  .button-base {
+    @apply px-6 py-2 rounded-lg flex items-center justify-center text-white font-medium transition-all duration-300;
+    transform: scale(1);
+  }
+
+  .button-base:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(162, 41, 38, 0.6);
+  }
+
+  .dark-gradient:hover {
+    box-shadow: 0 0 15px rgb(97, 97, 97);
+  }
+
+  .contact-field {
+    @apply rounded-lg border border-gray-300 bg-gray-50 px-4 py-2.5 text-sm text-gray-800 placeholder-gray-400 focus:border-black focus:ring-2 focus:ring-black/30 outline-none transition;
+  }
+}
+
+@keyframes border-spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-effect::after {
+    animation: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
